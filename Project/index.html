@@ -1,1 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WDDFS – Web Design & Development Project Guideline Template</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --navy:   #1A3C6E;
+    --mid:    #2E5FAA;
+    --accent: #F59E0B;
+    --green:  #16A34A;
+    --red:    #DC2626;
+    --light:  #EEF3FB;
+    --grey:   #F5F6FA;
+    --border: #DDE3EE;
+    --text:   #1E2535;
+    --muted:  #6B7280;
+    --white:  #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #ECF0F8;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 16px 60px; }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 48px 40px 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: ''; position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover::after {
+    content: ''; position: absolute;
+    bottom: -40px; left: 60px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(245,158,11,0.08);
+  }
+  .cover-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 18px;
+  }
+  .cover h1 { font-size: 34px; font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 8px; }
+  .cover h1 span { color: var(--accent); }
+  .cover-sub { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 28px; }
+  .cover-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cover-pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px; font-weight: 600; color: var(--white);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cover-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+  /* ── TOC ── */
+  .toc-bar {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 14px 20px;
+    margin-bottom: 24px;
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  }
+  .toc-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.07em; margin-right: 6px; }
+  .toc-link {
+    font-size: 12px; font-weight: 600; color: var(--mid);
+    text-decoration: none; padding: 4px 10px;
+    border-radius: 6px; border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .toc-link:hover { background: var(--light); border-color: var(--border); }
+
+  /* ── CARDS ── */
+  .card { background: var(--white); border-radius: 14px; border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+  .card-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 24px;
+    border-bottom: 2px solid var(--light);
+    background: linear-gradient(90deg, var(--light) 0%, var(--white) 100%);
+  }
+  .sec-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--navy); color: var(--white);
+    font-size: 14px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-head h2 { font-size: 16px; font-weight: 700; color: var(--navy); }
+  .card-body { padding: 22px 24px; }
+
+  /* ── DETAIL TABLE ── */
+  .detail-table { width: 100%; border-collapse: collapse; }
+  .detail-table tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+  .detail-table td { padding: 10px 12px; font-size: 13px; }
+  .detail-table td:first-child { font-weight: 600; color: var(--navy); background: var(--light); width: 30%; white-space: nowrap; }
+  .detail-table input[type="text"] {
+    width: 100%; border: none; background: transparent;
+    font-family: 'Inter', sans-serif; font-size: 13px;
+    color: var(--text); outline: none;
+    border-bottom: 1.5px dashed var(--border);
+    padding: 2px 0; cursor: text;
+  }
+  .detail-table input[type="text"]:focus { border-bottom-color: var(--mid); }
+
+  /* ── INFO BOXES ── */
+  .info-box { border-radius: 10px; padding: 16px 18px; margin: 14px 0; border-left: 4px solid; }
+  .info-box.blue  { background: var(--light);  border-color: var(--mid); }
+  .info-box.amber { background: #FFFBEB;        border-color: var(--accent); }
+  .info-box.green { background: #F0FDF4;        border-color: var(--green); }
+  .info-box.red   { background: #FEF2F2;        border-color: var(--red); }
+  .info-box-title { font-size: 12px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 8px; color: var(--navy); }
+  .info-box p, .info-box li { font-size: 13px; color: #374151; line-height: 1.65; }
+  .info-box ul { padding-left: 18px; margin-top: 4px; }
+  .info-box li { margin-bottom: 3px; }
+
+  /* ── BULLET LIST ── */
+  .guide-list { list-style: none; padding: 0; }
+  .guide-list li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 13px; padding: 6px 0;
+    border-bottom: 1px solid var(--grey);
+    color: #374151;
+  }
+  .guide-list li:last-child { border-bottom: none; }
+  .guide-list li::before { content: '›'; color: var(--mid); font-weight: 700; font-size: 16px; line-height: 1.4; flex-shrink: 0; }
+
+  /* ── TWO COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── OPTIONS GRID ── */
+  .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+  .option-card {
+    border: 2px solid var(--border); border-radius: 10px;
+    padding: 14px; text-align: center;
+    cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .option-card:hover { border-color: var(--mid); background: var(--light); }
+  .option-card.selected { border-color: var(--mid); background: var(--light); }
+  .option-letter { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+  .option-name { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+  /* ── TECH STACK BADGES ── */
+  .stack-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .stack-badge {
+    padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
+    border: 1.5px solid;
+  }
+  .stack-html  { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+  .stack-css   { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .stack-js    { background: #fefce8; color: #a16207; border-color: #fde68a; }
+  .stack-bs    { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
+  .stack-git   { background: #fff1f2; color: #be123c; border-color: #fecdd3; }
+  .stack-ux    { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+
+  /* ── MARKING TABLE ── */
+  .mark-table { width: 100%; border-collapse: collapse; }
+  .mark-table th { background: var(--navy); color: var(--white); padding: 10px 12px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; }
+  .mark-table th:nth-child(2) { text-align: center; width: 80px; }
+  .mark-table td { padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  .mark-table tr:last-child td { border-bottom: none; }
+  .mark-table tr:nth-child(even) td { background: var(--grey); }
+  .mark-table td:nth-child(2) { text-align: center; font-weight: 700; color: var(--mid); }
+  .mark-table tfoot td { background: var(--navy) !important; color: var(--white); font-weight: 700; }
+  .mark-table tfoot td:nth-child(2) { color: var(--accent); }
+
+  /* ── RUBRIC ── */
+  .rubric-wrap { overflow-x: auto; }
+  .rubric-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+  .rubric-table th { background: var(--navy); color: var(--white); padding: 9px 10px; font-size: 11px; font-weight: 700; text-align: left; letter-spacing: 0.04em; }
+  .rubric-table td { padding: 9px 10px; font-size: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .rubric-table tr:nth-child(even) td { background: var(--grey); }
+  .rubric-table td:first-child { font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .level-4 { color: #166534; font-weight: 600; }
+  .level-3 { color: #1e40af; }
+  .level-2 { color: #92400e; }
+  .level-1 { color: #991b1b; }
+
+  /* ── DELIVERABLE GRID ── */
+  .deliv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .deliv-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .deliv-num { width: 26px; height: 26px; border-radius: 7px; background: var(--navy); color: var(--white); font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .deliv-name { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .deliv-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before { content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 18px; }
+  .tl-dot { position: absolute; left: -26px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--white); border: 3px solid var(--mid); }
+  .tl-week { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 2px; }
+  .tl-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+  .tl-desc { font-size: 12px; color: var(--muted); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 9px 12px; border-radius: 8px;
+    background: var(--grey); font-size: 13px; color: #374151;
+    cursor: pointer; transition: background 0.15s;
+    user-select: none;
+  }
+  .checklist li:hover { background: var(--light); }
+  .checklist li.checked { background: #F0FDF4; text-decoration: line-through; color: var(--muted); }
+  .check-box { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: background 0.15s, border-color 0.15s; }
+  .checked .check-box { background: var(--green); border-color: var(--green); }
+  .check-tick { display: none; color: white; font-size: 11px; font-weight: 700; }
+  .checked .check-tick { display: block; }
+
+  /* ── WEIGHT PILL ── */
+  .weight-pill { display: inline-block; padding: 2px 10px; background: var(--light); border-radius: 10px; font-size: 11px; font-weight: 700; color: var(--navy); }
+
+  /* ── FOOTER ── */
+  .page-footer { text-align: center; margin-top: 32px; font-size: 11px; color: var(--muted); padding-top: 16px; border-top: 1px solid var(--border); }
+
+  mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: #e8eef8; padding: 1px 5px; border-radius: 3px; color: var(--navy); }
+
+  @media print {
+    body { background: white; }
+    .page-wrap { padding: 0; max-width: 100%; }
+    .card { break-inside: avoid; border-radius: 0; }
+    .toc-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-eyebrow">🌐 KCA University &nbsp;·&nbsp; WDDFS &nbsp;·&nbsp; Diploma in Information Technology &nbsp;·&nbsp; Week 12</div>
+    <h1>Web Design &amp; Development <span>Project Guideline Template</span></h1>
+    <p class="cover-sub">Everything you need to plan, build, and present your final front-end capstone project.</p>
+    <div class="cover-pills">
+      <div class="cover-pill"><span class="dot"></span>30% of Final Grade</div>
+      <div class="cover-pill"><span class="dot"></span>HTML5 · CSS3 · JavaScript</div>
+      <div class="cover-pill"><span class="dot"></span>Bootstrap · Git/GitHub</div>
+      <div class="cover-pill"><span class="dot"></span>Live Deployment &amp; Presentation</div>
+      <div class="cover-pill"><span class="dot"></span>Bloom's: Create</div>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc-bar">
+    <span class="toc-label">JUMP TO</span>
+    <a class="toc-link" href="#details">Details</a>
+    <a class="toc-link" href="#overview">Overview</a>
+    <a class="toc-link" href="#outcomes">Outcomes</a>
+    <a class="toc-link" href="#requirements">Requirements</a>
+    <a class="toc-link" href="#deliverables">Deliverables</a>
+    <a class="toc-link" href="#marking">Marking</a>
+    <a class="toc-link" href="#rubric">Rubric</a>
+    <a class="toc-link" href="#integrity">Integrity</a>
+    <a class="toc-link" href="#timeline">Timeline</a>
+    <a class="toc-link" href="#checklist">Checklist</a>
+  </div>
+
+  <!-- 1. PROJECT DETAILS -->
+  <div class="card" id="details">
+    <div class="card-head"><div class="sec-num">1</div><h2>Project Details</h2></div>
+    <div class="card-body">
+      <table class="detail-table">
+        <tr><td>Student Name</td><td><input type="text" placeholder="Enter your full name"></td></tr>
+        <tr><td>Student ID</td><td><input type="text" placeholder="e.g. KCA2024001"></td></tr>
+        <tr><td>Programme</td><td><input type="text" placeholder="Diploma in Information Technology"></td></tr>
+        <tr><td>Unit</td><td><input type="text" value="Web Design & Development (WDDFS)" readonly></td></tr>
+        <tr><td>Project Title</td><td><input type="text" placeholder="Enter your project title"></td></tr>
+        <tr><td>Submission Date</td><td><input type="text" placeholder="DD / MM / YYYY"></td></tr>
+        <tr><td>Live Project URL</td><td><input type="text" placeholder="e.g. https://username.github.io/project-name"></td></tr>
+        <tr><td>GitHub Repository</td><td><input type="text" placeholder="e.g. https://github.com/username/project-name"></td></tr>
+        <tr><td>Lecturer</td><td><input type="text" placeholder="Enter lecturer name"></td></tr>
+        <tr><td>Academic Year</td><td><input type="text" placeholder="e.g. 2024 / 2025"></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2. PROJECT OVERVIEW -->
+  <div class="card" id="overview">
+    <div class="card-head"><div class="sec-num">2</div><h2>Project Overview</h2></div>
+    <div class="card-body">
+      <p style="font-size:13px;color:#374151;margin-bottom:16px;">
+        The capstone project requires you to design, develop, test, and deploy a complete responsive front-end web application that demonstrates mastery of all technologies covered in WDDFS. The project constitutes <strong>30%</strong> of your final grade and is presented live in Week 12.
+      </p>
+      <div class="stack-wrap">
+        <span class="stack-badge stack-html">HTML5</span>
+        <span class="stack-badge stack-css">CSS3</span>
+        <span class="stack-badge stack-js">JavaScript</span>
+        <span class="stack-badge stack-bs">Bootstrap 5</span>
+        <span class="stack-badge stack-git">Git / GitHub</span>
+        <span class="stack-badge stack-ux">UI/UX &amp; WCAG</span>
+      </div>
+      <p style="font-size:12px;font-weight:700;letter-spacing:0.06em;color:var(--muted);margin:16px 0 10px;">SELECT YOUR CAPSTONE PROJECT OPTION</p>
+      <div class="options-grid" id="projectOptions">
+        <div class="option-card" onclick="selectOption(this)"><div class="option-letter">A</div><div class="option-name">Personal Portfolio Website</div></div>
+        <div class="option-card" onclick="selectOption(this)"><div class="option-letter">B</div><div class="option-name">School Information Portal</div></div>
+        <div class="option-card" onclick="selectOption(this)"><div class="option-letter">C</div><div class="option-name">Church Attendance Front-End System</div></div>
+        <div class="option-card" onclick="selectOption(this)"><div class="option-letter">D</div><div class="option-name">Real Estate Website</div></div>
+        <div class="option-card" onclick="selectOption(this)"><div class="option-letter">E</div><div class="option-name">Restaurant Website</div></div>
+        <div class="option-card" onclick="selectOption(this)"><div class="option-letter">F</div><div class="option-name">Hotel Booking Interface</div></div>
+        <div class="option-card" onclick="selectOption(this)"><div class="option-letter">G</div><div class="option-name">E-Commerce Front-End Application</div></div>
+        <div class="option-card" onclick="selectOption(this)"><div class="option-letter">H</div><div class="option-name">Lecturer-Approved Custom Project</div></div>
+      </div>
+      <div class="info-box amber" style="margin-top:14px;">
+        <div class="info-box-title">⚠ CUSTOM PROJECT (Option H)</div>
+        <p>Written approval from your lecturer is required by Week 10. Submit a one-page proposal covering: project purpose, target audience, technology stack, page structure, and responsive design approach.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. LEARNING OUTCOMES -->
+  <div class="card" id="outcomes">
+    <div class="card-head"><div class="sec-num">3</div><h2>Learning Outcomes Addressed</h2></div>
+    <div class="card-body">
+      <p style="font-size:13px;color:#374151;margin-bottom:14px;">On successful completion of this project, you will demonstrate the ability to:</p>
+      <ul class="guide-list">
+        <li>Design and build structured, semantic, and accessible webpages using HTML5</li>
+        <li>Style a fully responsive, multi-page website using CSS3 (Flexbox, Grid, media queries, animations)</li>
+        <li>Implement interactive behaviour and DOM manipulation using JavaScript</li>
+        <li>Apply Bootstrap 5 components and the responsive grid system in a real project</li>
+        <li>Manage and publish the project using Git version control and GitHub Pages or Netlify</li>
+        <li>Apply UI/UX principles and meet WCAG 2.1 accessibility criteria</li>
+        <li>Test, debug, and optimise a front-end application across browsers and devices</li>
+        <li>Present and defend design and technical decisions to an academic audience</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. TECHNICAL REQUIREMENTS -->
+  <div class="card" id="requirements">
+    <div class="card-head"><div class="sec-num">4</div><h2>Technical Requirements</h2></div>
+    <div class="card-body">
+      <div class="two-col">
+        <div>
+          <div class="info-box blue">
+            <div class="info-box-title">🏗 HTML5 Structure</div>
+            <ul>
+              <li>Minimum 4 pages (or equivalent single-page sections)</li>
+              <li>Semantic tags throughout: <mono>header</mono>, <mono>nav</mono>, <mono>main</mono>, <mono>section</mono>, <mono>footer</mono></li>
+              <li>At least one accessible HTML form with validation attributes</li>
+              <li>All images include descriptive <mono>alt</mono> text</li>
+              <li>Valid HTML — passes W3C Validator with no errors</li>
+            </ul>
+          </div>
+          <div class="info-box blue" style="margin-top:10px;">
+            <div class="info-box-title">🎨 CSS3 Styling</div>
+            <ul>
+              <li>External stylesheet(s) only — no inline styles</li>
+              <li>CSS custom properties (variables) for colours and typography</li>
+              <li>Flexbox or Grid used for all major layout sections</li>
+              <li>At least one keyframe animation or CSS transition</li>
+              <li>Media queries for mobile, tablet, and desktop breakpoints</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="info-box blue">
+            <div class="info-box-title">⚡ JavaScript Interactivity</div>
+            <ul>
+              <li>Minimum 3 interactive features using vanilla JavaScript</li>
+              <li>DOM manipulation — dynamically update content or styles</li>
+              <li>At least one event listener (click, submit, keyup, etc.)</li>
+              <li>Client-side form validation with user feedback messages</li>
+              <li>No jQuery — use modern ES6+ syntax</li>
+            </ul>
+          </div>
+          <div class="info-box blue" style="margin-top:10px;">
+            <div class="info-box-title">📱 Bootstrap &amp; Responsiveness</div>
+            <ul>
+              <li>Bootstrap 5 integrated via CDN or npm</li>
+              <li>Bootstrap grid system used for at least 2 page sections</li>
+              <li>At least 3 Bootstrap components (navbar, cards, modal, etc.)</li>
+              <li>Fully responsive — tested at 320px, 768px, and 1280px+ widths</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="info-box green" style="margin-top:4px;">
+        <div class="info-box-title">🔧 Git, Deployment &amp; Accessibility</div>
+        <p>Git repository with a minimum of <strong>10 meaningful commits</strong> showing incremental development &nbsp;·&nbsp; Project deployed live on <strong>GitHub Pages or Netlify</strong> &nbsp;·&nbsp; WCAG 2.1 AA: sufficient colour contrast, keyboard navigation, ARIA roles where appropriate &nbsp;·&nbsp; Tested on Chrome, Firefox, and mobile viewport</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. DELIVERABLES -->
+  <div class="card" id="deliverables">
+    <div class="card-head"><div class="sec-num">5</div><h2>Deliverables &amp; Submission</h2></div>
+    <div class="card-body">
+      <div class="deliv-grid">
+        <div class="deliv-card">
+          <div class="deliv-num">1</div>
+          <div class="deliv-name">Source Code (Zipped)</div>
+          <div class="deliv-desc">All HTML, CSS, JS, and asset files zipped as <mono>StudentID_ProjectTitle.zip</mono></div>
+        </div>
+        <div class="deliv-card">
+          <div class="deliv-num">2</div>
+          <div class="deliv-name">GitHub Repository Link</div>
+          <div class="deliv-desc">Public repo with full commit history showing iterative development across all weeks</div>
+        </div>
+        <div class="deliv-card">
+          <div class="deliv-num">3</div>
+          <div class="deliv-name">Live Deployed URL</div>
+          <div class="deliv-desc">Working project URL hosted on GitHub Pages or Netlify — must be accessible at submission time</div>
+        </div>
+        <div class="deliv-card">
+          <div class="deliv-num">4</div>
+          <div class="deliv-name">Project Report (PDF)</div>
+          <div class="deliv-desc">4–8 pages: brief, wireframes/mockups, design decisions, testing evidence, accessibility audit, reflection</div>
+        </div>
+        <div class="deliv-card">
+          <div class="deliv-num">5</div>
+          <div class="deliv-name">README.md</div>
+          <div class="deliv-desc">Project description, tech stack, features list, setup instructions, and live URL — written in Markdown</div>
+        </div>
+        <div class="deliv-card">
+          <div class="deliv-num">6</div>
+          <div class="deliv-name">Presentation (5–7 min)</div>
+          <div class="deliv-desc">Live demo of the deployed site + Q&amp;A + peer code review in the Week 12 class session</div>
+        </div>
+      </div>
+      <div class="info-box amber" style="margin-top:16px;">
+        <div class="info-box-title">📤 Submission Instructions</div>
+        <ul>
+          <li>Submit the zipped source code and report PDF via the <strong>KCA University Student Portal</strong> by <strong>11:59 PM on the due date</strong></li>
+          <li>Paste your <strong>GitHub repo link</strong> and <strong>live URL</strong> in the submission comments field</li>
+          <li>Late penalty: <strong>5 marks deducted per day</strong>. No submissions accepted after 5 days</li>
+          <li>Folder/zip naming: <mono>[StudentID]_[FirstName]_[ProjectTitle]</mono> &nbsp; e.g. <em>KCA2024001_Jane_PortfolioSite</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. MARKING SCHEME -->
+  <div class="card" id="marking">
+    <div class="card-head"><div class="sec-num">6</div><h2>Marking Scheme &nbsp;<span class="weight-pill">Capstone Project — 30%</span></h2></div>
+    <div class="card-body">
+      <table class="mark-table">
+        <thead>
+          <tr><th>Component</th><th>Weight</th><th>Assessment Criteria</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>HTML5 Structure &amp; Semantics</strong></td><td>5%</td><td>Correct semantic elements, valid markup, accessible forms and images</td></tr>
+          <tr><td><strong>CSS3 Styling &amp; Responsiveness</strong></td><td>6%</td><td>Professional design, Flexbox/Grid layouts, animations, media queries across breakpoints</td></tr>
+          <tr><td><strong>JavaScript Interactivity</strong></td><td>5%</td><td>Functional DOM manipulation, event handling, form validation, ES6+ syntax</td></tr>
+          <tr><td><strong>Bootstrap Integration</strong></td><td>4%</td><td>Correct use of grid system and components; appropriate customisation</td></tr>
+          <tr><td><strong>Git &amp; Deployment</strong></td><td>4%</td><td>Meaningful commit history (10+), working live URL, clean repository structure</td></tr>
+          <tr><td><strong>UI/UX &amp; Accessibility</strong></td><td>3%</td><td>WCAG 2.1 compliance, colour contrast, keyboard navigation, user-centred design</td></tr>
+          <tr><td><strong>Project Report</strong></td><td>1%</td><td>Clear brief, wireframes, testing evidence, accessibility audit, reflection</td></tr>
+          <tr><td><strong>Presentation &amp; Demo</strong></td><td>2%</td><td>Clear delivery, live deployed demo, confident Q&amp;A responses</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td><strong>TOTAL</strong></td><td>30%</td><td>Combined capstone project grade</td></tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- 7. GRADING RUBRIC -->
+  <div class="card" id="rubric">
+    <div class="card-head"><div class="sec-num">7</div><h2>Grading Rubric — Front-End Implementation</h2></div>
+    <div class="card-body">
+      <div class="rubric-wrap">
+        <table class="rubric-table">
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>Excellent (4)</th>
+              <th>Good (3)</th>
+              <th>Satisfactory (2)</th>
+              <th>Needs Work (1)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HTML Semantics</td>
+              <td class="level-4">All semantic tags used correctly; valid; fully accessible</td>
+              <td class="level-3">Mostly semantic; minor validation issues</td>
+              <td class="level-2">Some semantic tags; several errors</td>
+              <td class="level-1">Generic divs throughout; invalid markup</td>
+            </tr>
+            <tr>
+              <td>CSS &amp; Layout</td>
+              <td class="level-4">Professional design; Flexbox/Grid mastered; CSS variables used; animations polished</td>
+              <td class="level-3">Good layout; mostly responsive; minor design inconsistencies</td>
+              <td class="level-2">Basic styling; layout breaks on some viewports</td>
+              <td class="level-1">Minimal or inline CSS; not responsive</td>
+            </tr>
+            <tr>
+              <td>JavaScript</td>
+              <td class="level-4">3+ interactive features; clean ES6+; form validation; no console errors</td>
+              <td class="level-3">2–3 features working; mostly clean code; minor bugs</td>
+              <td class="level-2">1–2 features; some errors in console</td>
+              <td class="level-1">Little or no JavaScript functionality</td>
+            </tr>
+            <tr>
+              <td>Bootstrap</td>
+              <td class="level-4">Grid + 3+ components; well customised; seamless with custom CSS</td>
+              <td class="level-3">Grid + 2 components; minor conflicts with custom CSS</td>
+              <td class="level-2">Bootstrap linked but underused</td>
+              <td class="level-1">Not integrated or incorrectly linked</td>
+            </tr>
+            <tr>
+              <td>Responsiveness</td>
+              <td class="level-4">Flawless at 320px, 768px, 1280px+; tested on real devices</td>
+              <td class="level-3">Responsive at major breakpoints; minor issues on edge sizes</td>
+              <td class="level-2">Partially responsive; breaks on mobile</td>
+              <td class="level-1">Not responsive; fixed-width layout</td>
+            </tr>
+            <tr>
+              <td>Git &amp; Deployment</td>
+              <td class="level-4">10+ commits; descriptive messages; live site working; clean README</td>
+              <td class="level-3">7–9 commits; site deployed; README present</td>
+              <td class="level-2">4–6 commits; deployment attempted</td>
+              <td class="level-1">Fewer than 4 commits; no live deployment</td>
+            </tr>
+            <tr>
+              <td>Accessibility</td>
+              <td class="level-4">WCAG AA met; passes contrast checker; keyboard navigable; ARIA used</td>
+              <td class="level-3">Most WCAG criteria met; minor contrast issues</td>
+              <td class="level-2">Alt text present; some contrast issues</td>
+              <td class="level-1">No accessibility consideration</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. ACADEMIC INTEGRITY -->
+  <div class="card" id="integrity">
+    <div class="card-head"><div class="sec-num">8</div><h2>Academic Integrity Policy</h2></div>
+    <div class="card-body">
+      <p style="font-size:13px;color:#374151;margin-bottom:12px;">All submitted work must be your own original creation. The following constitute academic misconduct under KCA University Academic Regulations:</p>
+      <ul class="guide-list">
+        <li>Copying code from another student or submitting another person's project as your own</li>
+        <li>Submitting AI-generated code without acknowledgement or demonstrable understanding</li>
+        <li>Copying templates or themes from the internet without significant original modification and attribution</li>
+        <li>Sharing your source code with other students before the submission deadline</li>
+        <li>Fabricating browser testing results, commit history, or accessibility audit findings</li>
+      </ul>
+      <div class="info-box blue" style="margin-top:16px;">
+        <div class="info-box-title">📋 STUDENT DECLARATION — sign at submission</div>
+        <p style="margin-bottom:12px;"><em>"I declare that this project is my own original work. All code was written by me, and any external resources (libraries, icons, fonts, images) are properly attributed in my README and project report. I understand that plagiarism may result in a grade of zero and disciplinary action in accordance with KCA University regulations."</em></p>
+        <p style="font-size:13px;margin-top:10px;">
+          Signature: &nbsp;<span style="display:inline-block;width:200px;border-bottom:1.5px dashed #aaa;">&nbsp;</span>
+          &emsp; Date: &nbsp;<span style="display:inline-block;width:110px;border-bottom:1.5px dashed #aaa;">&nbsp;</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. TIMELINE -->
+  <div class="card" id="timeline">
+    <div class="card-head"><div class="sec-num">9</div><h2>Suggested Project Timeline</h2></div>
+    <div class="card-body">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">WEEK 10</div>
+          <div class="tl-title">Planning &amp; Design</div>
+          <div class="tl-desc">Select your project option; get Option H approval if needed. Produce wireframes or mockups for all pages, define your colour palette and typography, and plan your Bootstrap grid structure.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">WEEK 10–11</div>
+          <div class="tl-title">HTML &amp; CSS Development</div>
+          <div class="tl-desc">Build all HTML pages with semantic structure. Apply external CSS with Flexbox/Grid layouts, CSS variables, and responsive media queries. Integrate Bootstrap grid and components. Begin Git commits.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">WEEK 11</div>
+          <div class="tl-title">JavaScript &amp; Interactivity</div>
+          <div class="tl-desc">Add all JavaScript features: DOM manipulation, event listeners, and form validation. Test interactivity across browsers. Continue committing to GitHub with meaningful messages.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">WEEK 11–12</div>
+          <div class="tl-title">Testing, Accessibility &amp; Deployment</div>
+          <div class="tl-desc">Run the W3C Validator, check colour contrast, test keyboard navigation, and audit with browser DevTools. Deploy to GitHub Pages or Netlify. Test the live URL on mobile and desktop.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">WEEK 12</div>
+          <div class="tl-title">Submission &amp; Presentation</div>
+          <div class="tl-desc">Submit all deliverables via the Student Portal by 11:59 PM. Present your live site with a 5–7 minute demo, take part in Q&amp;A, and complete the peer code review exercise in class.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. CHECKLIST -->
+  <div class="card" id="checklist">
+    <div class="card-head"><div class="sec-num">10</div><h2>Pre-Submission Checklist</h2></div>
+    <div class="card-body">
+      <p style="font-size:13px;color:#374151;margin-bottom:14px;">Click each item to mark it complete. All items must be ticked before you submit.</p>
+      <ul class="checklist" id="checkList">
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Zip file is correctly named: <mono>[StudentID]_[FirstName]_[ProjectTitle].zip</mono></li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>All HTML files use semantic tags and pass the W3C Validator with no errors</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>CSS is in external stylesheets; CSS variables defined; Flexbox/Grid layouts used</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>At least one CSS animation or transition is implemented</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Media queries cover mobile (320px), tablet (768px), and desktop (1280px+)</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Minimum 3 JavaScript interactive features are working with no console errors</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Client-side form validation with user-facing feedback messages is implemented</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Bootstrap 5 integrated with grid system and at least 3 components</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>GitHub repository is public with 10+ meaningful commits showing iterative progress</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Project is live and accessible at the deployed URL (GitHub Pages or Netlify)</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>All images have descriptive alt text; colour contrast meets WCAG 2.1 AA</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Site tested on Chrome, Firefox, and a mobile viewport</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>README.md includes project description, tech stack, features, setup steps, and live URL</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Project Report (PDF) includes wireframes, design decisions, testing evidence, and reflection</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><span class="check-tick">✓</span></div>Academic Integrity Declaration signed</li>
+      </ul>
+      <div id="checkProgress" style="margin-top:14px;font-size:13px;color:var(--muted);font-weight:600;"></div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="info-box green" style="margin-top:4px;">
+    <div class="info-box-title">💬 Need Help?</div>
+    <p>
+      <strong>Office Hours:</strong> Contact your lecturer during scheduled consultation hours.<br>
+      <strong>Email:</strong> <em>[lecturer.email@kca.ac.ke]</em> &nbsp;·&nbsp; Subject: <em>WDDFS Capstone — [Student ID] — [Issue]</em><br>
+      <strong>LMS Forum:</strong> Post general questions on the course discussion board so all learners benefit from the answer.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    KCA University &nbsp;·&nbsp; WDDFS — Web Design &amp; Development &nbsp;·&nbsp; Capstone Project Guideline Template &nbsp;·&nbsp; Week 12
+  </div>
+
+</div>
+
+<script>
+  function selectOption(el) {
+    document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var total = document.querySelectorAll('#checkList li').length;
+    var done  = document.querySelectorAll('#checkList li.checked').length;
+    var el    = document.getElementById('checkProgress');
+    if (done === 0) { el.textContent = ''; return; }
+    if (done === total) {
+      el.textContent = '🎉 All ' + total + ' items complete — you\'re ready to submit!';
+      el.style.color = 'var(--green)';
+    } else {
+      el.textContent = done + ' of ' + total + ' items complete';
+      el.style.color = 'var(--muted)';
+    }
+  }
+</script>
+</body>
+</html>
 
